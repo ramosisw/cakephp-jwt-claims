@@ -2,6 +2,7 @@
 
 namespace RamosISW\Jwt\Claims;
 
+use ADmad\JwtAuth\Auth\JwtAuthenticate;
 use Cake\Controller\Component;
 use Cake\Controller\ComponentRegistry;
 
@@ -49,20 +50,23 @@ class ClaimsComponent extends Component
     public function initialize(array $config)
     {
         $authConfig = $this->Auth->getConfig('authenticate');
+
         if (!(isset($authConfig['ADmad/JwtAuth.Jwt']) && is_array($authConfig['ADmad/JwtAuth.Jwt']))) {
             throw new \Exception('ADmad/JwtAuth.Jwt not set in authenticate config');
         }
 
         $this->Jwt = $this->Auth->getAuthenticate('ADmad/JwtAuth.Jwt');
 
-        $payload = $this->Jwt->getPayload($this->_registry->getController()->getRequest());
+        if ($this->Jwt instanceof JwtAuthenticate) {
+            $payload = $this->Jwt->getPayload($this->_registry->getController()->getRequest());
 
-        $claims_key = $this->_config['claims_key'];
-        $data = $this->_config[$claims_key];
-        if (isset($data) && is_array($data)) {
-            foreach ($data as $key) {
-                if (isset($payload->$claims_key) && isset($payload->$claims_key->$key)) {
-                    $this->$key = $payload->$claims_key->$key;
+            $claims_key = $this->_config['claims_key'];
+            $data = $this->_config[$claims_key];
+            if (isset($data) && is_array($data)) {
+                foreach ($data as $key) {
+                    if (isset($payload->$claims_key) && isset($payload->$claims_key->$key)) {
+                        $this->$key = $payload->$claims_key->$key;
+                    }
                 }
             }
         }
