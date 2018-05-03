@@ -1,3 +1,6 @@
 parameters:
     ignoreErrors:
-        - '#Call to an undefined method object::getConfig\(\)#'
+        - '#Property RamosISW\Jwt\Claims\ClaimsComponent::$Jwt
+            (ADmad\JwtAuth\Auth\JwtAuthenticate) does not accept
+            Cake\Auth\BaseAuthenticate|null.#'
+
