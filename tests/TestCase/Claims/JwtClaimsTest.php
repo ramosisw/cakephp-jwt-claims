@@ -2,8 +2,8 @@
 
 namespace RamosISW\Jwt\Claims\Test\TestCase\Claims;
 
-use Cake\Controller\Component\AuthComponent;
 use Cake\Controller\ComponentRegistry;
+use Cake\Controller\Component\AuthComponent;
 use Cake\Http\Response;
 use Cake\Http\ServerRequest;
 use Cake\TestSuite\TestCase;
