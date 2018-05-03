@@ -16,8 +16,19 @@ use RamosISW\Jwt\Claims\ClaimsComponent;
  */
 class JwtClaimsTest extends TestCase
 {
+    /**
+     * @var string to set on authorization
+     */
     private $token;
+
+    /**
+     * @var \Cake\Controller\Controller base off request
+     */
     private $controller;
+
+    /**
+     * @var \RamosISW\Jwt\Claims\ClaimsComponent component of test
+     */
     private $Component;
 
     public $fixtures = [
