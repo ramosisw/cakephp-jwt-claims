@@ -70,7 +70,9 @@ class JwtClaimsTest extends TestCase
             ],
         ];
         foreach ($config as $key => $value) {
-            if (isset($_config[$key])) $_config[$key] = $value;
+            if (isset($_config[$key])) {
+                $_config[$key] = $value;
+            }
         }
         $registry->Auth = new AuthComponent($registry, ['authenticate' => [
             'ADmad/JwtAuth.Jwt' => $_config
@@ -103,8 +105,6 @@ class JwtClaimsTest extends TestCase
         ];
 
         $this->assertEquals($claims, $this->Component->getClaims());
-
-
     }
 
     /**

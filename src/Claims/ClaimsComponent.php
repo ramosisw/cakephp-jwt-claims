@@ -13,10 +13,19 @@ use Cake\Controller\ComponentRegistry;
 class ClaimsComponent extends Component
 {
 
+    /**
+     * Components
+     * @var array
+     */
     public $components = [
         'Auth'
     ];
 
+    /**
+     * ClaimsComponent constructor.
+     * @param ComponentRegistry $registry
+     * @param array $config
+     */
     public function __construct(ComponentRegistry $registry, array $config = [])
     {
         $defaultConfig = [
