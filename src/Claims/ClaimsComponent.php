@@ -23,8 +23,8 @@ class ClaimsComponent extends Component
 
     /**
      * ClaimsComponent constructor.
-     * @param ComponentRegistry $registry
-     * @param array $config
+     * @param \Cake\Controller\ComponentRegistry $registry The Component registry used on this request.
+     * @param array $config Array of config to use
      */
     public function __construct(ComponentRegistry $registry, array $config = [])
     {
@@ -42,15 +42,16 @@ class ClaimsComponent extends Component
     }
 
     /**
-     * @param array $config
+     * @param array $config Array of config to use
      * @throws \Exception
+     * @return void
      */
     public function initialize(array $config)
     {
-
         $authConfig = $this->Auth->getConfig('authenticate');
-        if (!(isset($authConfig['ADmad/JwtAuth.Jwt']) && is_array($authConfig['ADmad/JwtAuth.Jwt'])))
+        if (!(isset($authConfig['ADmad/JwtAuth.Jwt']) && is_array($authConfig['ADmad/JwtAuth.Jwt']))) {
             throw new \Exception('ADmad/JwtAuth.Jwt not set in authenticate config');
+        }
 
         $this->Jwt = $this->Auth->getAuthenticate('ADmad/JwtAuth.Jwt');
 
@@ -60,8 +61,9 @@ class ClaimsComponent extends Component
         $data = $this->_config[$claims_key];
         if (isset($data) && is_array($data)) {
             foreach ($data as $key) {
-                if (isset($payload->$claims_key) && isset($payload->$claims_key->$key))
+                if (isset($payload->$claims_key) && isset($payload->$claims_key->$key)) {
                     $this->$key = $payload->$claims_key->$key;
+                }
             }
         }
     }
