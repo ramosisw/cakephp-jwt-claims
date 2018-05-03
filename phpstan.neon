@@ -1,6 +1,3 @@
 parameters:
     ignoreErrors:
-        - '#Property RamosISW\Jwt\Claims\ClaimsComponent::$Jwt
-            (ADmad\JwtAuth\Auth\JwtAuthenticate) does not accept
-            Cake\Auth\BaseAuthenticate|null.#'
-
+        - '#Property object:$Jwt does not accept object|null#'
