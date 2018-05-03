@@ -57,6 +57,9 @@ class ClaimsComponent extends Component
         }
     }
 
+    /**
+     * @return mixed
+     */
     public function getClaims()
     {
         return $this->_config['claims'];
