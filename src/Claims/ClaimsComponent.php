@@ -30,15 +30,11 @@ class ClaimsComponent extends Component
     public function __construct(ComponentRegistry $registry, array $config = [])
     {
         $defaultConfig = [
-            'claims_key' => 'data',
-            'cookie' => 'jwt',
-            'key' => null,
-            'allowedAlgs' => ['HS256'],
+            'claims_key' => 'claims',
             'claims' => []
         ];
         $this->setConfig($defaultConfig);
 
-        $config['claims'] = $config[isset($config['claims_key']) ? $config['claims_key'] : $defaultConfig['claims_key']];
         parent::__construct($registry, $config);
     }
 
@@ -60,8 +56,7 @@ class ClaimsComponent extends Component
         if ($this->Jwt instanceof JwtAuthenticate) {
             $payload = $this->Jwt->getPayload($this->_registry->getController()->getRequest());
 
-            $claims_key = $this->_config['claims_key'];
-            $data = $this->_config[$claims_key];
+            $data = $this->getClaims();
             if (isset($data) && is_array($data)) {
                 foreach ($data as $key) {
                     if (isset($payload->$claims_key) && isset($payload->$claims_key->$key)) {
@@ -73,10 +68,11 @@ class ClaimsComponent extends Component
     }
 
     /**
-     * @return mixed
+     * @return Array of claims
      */
     public function getClaims()
     {
-        return $this->_config['claims'];
+        $claims_key = $this->_config['claims_key'];
+        return $this->_config[$claims_key];
     }
 }
