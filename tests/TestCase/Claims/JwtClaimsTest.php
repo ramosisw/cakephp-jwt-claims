@@ -16,25 +16,22 @@ use RamosISW\Jwt\Claims\ClaimsComponent;
  */
 class JwtClaimsTest extends TestCase
 {
-    /**
-     * @var string to set on authorization
-     */
-    private $token;
-
-    /**
-     * @var \Cake\Controller\Controller base off request
-     */
-    private $controller;
-
-    /**
-     * @var \RamosISW\Jwt\Claims\ClaimsComponent component of test
-     */
-    private $Component;
-
     public $fixtures = [
         'plugin.RamosISW\Jwt.users',
         'plugin.RamosISW\Jwt.groups',
     ];
+    /**
+     * @var string to set on authorization
+     */
+    private $token;
+    /**
+     * @var \Cake\Controller\Controller base off request
+     */
+    private $controller;
+    /**
+     * @var \RamosISW\Jwt\Claims\ClaimsComponent component of test
+     */
+    private $Component;
 
     /**
      * Setup tests
@@ -56,6 +53,27 @@ class JwtClaimsTest extends TestCase
     }
 
     /**
+     * Test without ADmad
+     * @expectedException \Cake\Core\Exception\MissingPluginException
+     */
+    public function testNoConfigAuth()
+    {
+        $request = new ServerRequest([
+            'url' => 'posts/index?token=' . $this->token
+        ]);
+
+        $this->setRequestController($request);
+
+        $registry = new ComponentRegistry($this->controller);
+        $this->Component = new ClaimsComponent($registry, [
+            'claims_key' => 'data',
+            'data' => [
+                'user_id', 'user_name', 'email'
+            ]
+        ]);
+    }
+
+    /**
      * @param $request ServerRequest add to Controller
      */
     private function setRequestController($request)
@@ -65,29 +83,6 @@ class JwtClaimsTest extends TestCase
             ->setConstructorArgs([$request, $response])
             ->setMethods(null)
             ->getMock();
-    }
-
-    /**
-     * @param $registry
-     * @param array $config Configuration to Auth Component
-     */
-    private function registryAuth($registry, $config = [])
-    {
-        $_config = [
-            'parameter' => 'token',
-            'userModel' => 'Users',
-            'fields' => [
-                'username' => 'id'
-            ],
-        ];
-        foreach ($config as $key => $value) {
-            if (isset($_config[$key])) {
-                $_config[$key] = $value;
-            }
-        }
-        $registry->Auth = new AuthComponent($registry, ['authenticate' => [
-            'ADmad/JwtAuth.Jwt' => $_config
-        ]]);
     }
 
     /**
@@ -116,6 +111,51 @@ class JwtClaimsTest extends TestCase
         ];
 
         $this->assertEquals($claims, $this->Component->getClaims());
+    }
+
+    /**
+     * @param $registry
+     * @param array $config Configuration to Auth Component
+     */
+    private function registryAuth($registry, $config = [])
+    {
+        $_config = [
+            'parameter' => 'token',
+            'userModel' => 'Users',
+            'fields' => [
+                'username' => 'id'
+            ],
+        ];
+        foreach ($config as $key => $value) {
+            if (isset($_config[$key])) {
+                $_config[$key] = $value;
+            }
+        }
+        $registry->Auth = new AuthComponent($registry, ['authenticate' => [
+            'ADmad/JwtAuth.Jwt' => $_config
+        ]]);
+    }
+
+    public function testClaimsKey()
+    {
+        $request = new ServerRequest([
+            'url' => 'posts/index?token=' . $this->token
+        ]);
+
+        $this->setRequestController($request);
+
+        $registry = new ComponentRegistry($this->controller);
+
+        $this->registryAuth($registry);
+        $this->Component = new ClaimsComponent($registry, [
+            'claims_key' => 'data',
+            'data' => [
+                'user_id', 'user_name', 'email'
+            ]
+        ]);
+
+        $claims_key = 'data';
+        $this->assertEquals($claims_key, $this->Component->getClaimsKey());
     }
 
     /**

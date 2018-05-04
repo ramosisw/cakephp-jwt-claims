@@ -5,6 +5,7 @@ namespace RamosISW\Jwt\Claims;
 use ADmad\JwtAuth\Auth\JwtAuthenticate;
 use Cake\Controller\Component;
 use Cake\Controller\ComponentRegistry;
+use Cake\Core\Exception\MissingPluginException;
 
 /**
  * @property \Cake\Controller\Component\AuthComponent $Auth
@@ -23,6 +24,11 @@ class ClaimsComponent extends Component
     ];
 
     /**
+     * @var string plugin name used by this component
+     */
+    private $jwtPlugin = 'ADmad/JwtAuth.Jwt';
+
+    /**
      * ClaimsComponent constructor.
      * @param \Cake\Controller\ComponentRegistry $registry The Component registry used on this request.
      * @param array $config Array of config to use
@@ -30,8 +36,7 @@ class ClaimsComponent extends Component
     public function __construct(ComponentRegistry $registry, array $config = [])
     {
         $defaultConfig = [
-            'claims_key' => 'claims',
-            'claims' => []
+            'claims_key' => 'claims'
         ];
         $this->setConfig($defaultConfig);
 
@@ -47,11 +52,11 @@ class ClaimsComponent extends Component
     {
         $authConfig = $this->Auth->getConfig('authenticate');
 
-        if (!(isset($authConfig['ADmad/JwtAuth.Jwt']) && is_array($authConfig['ADmad/JwtAuth.Jwt']))) {
-            throw new \Exception('ADmad/JwtAuth.Jwt not set in authenticate config');
+        if (!(isset($authConfig[$this->jwtPlugin]) && is_array($authConfig[$this->jwtPlugin]))) {
+            throw new MissingPluginException([$this->jwtPlugin]);
         }
 
-        $this->Jwt = $this->Auth->getAuthenticate('ADmad/JwtAuth.Jwt');
+        $this->Jwt = $this->Auth->getAuthenticate($this->jwtPlugin);
 
         if ($this->Jwt instanceof JwtAuthenticate) {
             $payload = $this->Jwt->getPayload($this->_registry->getController()->getRequest());
