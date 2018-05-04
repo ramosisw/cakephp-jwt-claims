@@ -82,7 +82,7 @@ class ClaimsComponent extends Component
     public function getClaims()
     {
         $claims_key = $this->_config['claims_key'];
-        
+
         return $this->_config[$claims_key];
     }
 }
