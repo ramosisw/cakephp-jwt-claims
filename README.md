@@ -6,3 +6,10 @@
 [![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](LICENSE.txt)
 
 CakePHP 3.6+ Component to read claims of JWT on Authorization 
+
+
+## Installation
+
+```sh
+composer require ramosisw/
+```
