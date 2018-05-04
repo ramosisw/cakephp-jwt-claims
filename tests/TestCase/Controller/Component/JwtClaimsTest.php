@@ -1,6 +1,6 @@
 <?php
 
-namespace RamosISW\Jwt\Claims\Test\TestCase\Claims;
+namespace RamosISW\Jwt\Component\Test\TestCase\Controller\Component;
 
 use Cake\Controller\ComponentRegistry;
 use Cake\Controller\Component\AuthComponent;
@@ -9,7 +9,7 @@ use Cake\Http\ServerRequest;
 use Cake\TestSuite\TestCase;
 use Cake\Utility\Security;
 use Firebase\JWT\JWT;
-use RamosISW\Jwt\Claims\ClaimsComponent;
+use RamosISW\Jwt\Controller\Component\ClaimsComponent;
 
 /**
  * Test case for JwtClaims.
@@ -29,7 +29,7 @@ class JwtClaimsTest extends TestCase
      */
     private $controller;
     /**
-     * @var \RamosISW\Jwt\Claims\ClaimsComponent component of test
+     * @var \RamosISW\Jwt\Controller\Component\ClaimsComponent component of test
      */
     private $Component;
 
@@ -136,6 +136,11 @@ class JwtClaimsTest extends TestCase
         ]]);
     }
 
+    /**
+     * Test Claimskey
+     *
+     * @return void
+     */
     public function testClaimsKey()
     {
         $request = new ServerRequest([

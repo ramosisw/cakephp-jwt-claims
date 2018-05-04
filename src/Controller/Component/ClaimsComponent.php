@@ -1,6 +1,6 @@
 <?php
 
-namespace RamosISW\Jwt\Claims;
+namespace RamosISW\Jwt\Controller\Component;
 
 use ADmad\JwtAuth\Auth\JwtAuthenticate;
 use Cake\Controller\Component;
