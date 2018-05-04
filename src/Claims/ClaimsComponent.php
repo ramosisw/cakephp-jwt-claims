@@ -77,11 +77,12 @@ class ClaimsComponent extends Component
     }
 
     /**
-     * @return array of claims
+     * @return mixed claims
      */
     public function getClaims()
     {
         $claims_key = $this->_config['claims_key'];
+        
         return $this->_config[$claims_key];
     }
 }
