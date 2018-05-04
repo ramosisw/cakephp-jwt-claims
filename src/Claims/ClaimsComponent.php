@@ -56,6 +56,7 @@ class ClaimsComponent extends Component
         if ($this->Jwt instanceof JwtAuthenticate) {
             $payload = $this->Jwt->getPayload($this->_registry->getController()->getRequest());
 
+            $claims_key = $this->getClaimsKey();
             $data = $this->getClaims();
             if (isset($data) && is_array($data)) {
                 foreach ($data as $key) {
@@ -68,7 +69,15 @@ class ClaimsComponent extends Component
     }
 
     /**
-     * @return Array of claims
+     * @return mixed claims key to find in payload object
+     */
+    public function getClaimsKey()
+    {
+        return $this->_config['claims_key'];
+    }
+
+    /**
+     * @return array of claims
      */
     public function getClaims()
     {
