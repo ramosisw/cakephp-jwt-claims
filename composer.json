@@ -1,5 +1,5 @@
 {
-  "name": "ramoisw/cakephp-jwt-claims",
+  "name": "ramosisw/cakephp-jwt-claims",
   "type": "cakephp-component",
   "description": "CakePHP plugin for read claims on jwt token",
   "keywords": [
@@ -9,18 +9,18 @@
     "jwt",
     "claims"
   ],
-  "homepage": "http://github.com/ramoisw/cakephp-jwt-claims",
+  "homepage": "http://github.com/ramosisw/cakephp-jwt-claims",
   "authors": [
     {
       "name": "Julio C. Ramos",
       "role": "Author",
-      "homepage": "https://github.com/ramoisw"
+      "homepage": "https://github.com/ramosisw"
     }
   ],
   "license": "MIT",
   "support": {
-    "source": "https://github.com/ramoisw/cakephp-jwt-claims",
-    "issues": "https://github.com/ramoisw/cakephp-jwt-claims/issues"
+    "source": "https://github.com/ramosisw/cakephp-jwt-claims",
+    "issues": "https://github.com/ramosisw/cakephp-jwt-claims/issues"
   },
   "require": {
     "admad/cakephp-jwt-auth": "*",
